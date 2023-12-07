@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   FormControl,
@@ -21,6 +21,7 @@ import {
 import axios from "axios";
 
 const Register = () => {
+  Register.title = "Register";
   const [credentials, setCredentials] = useState("");
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);

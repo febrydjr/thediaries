@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   FormControl,
@@ -21,6 +21,7 @@ import {
 import axios from "axios";
 
 const SignIn = () => {
+  SignIn.title = "Sign In";
   const [credentials, setCredentials] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
