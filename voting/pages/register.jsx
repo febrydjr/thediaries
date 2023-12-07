@@ -99,7 +99,7 @@ const Register = () => {
                 />
               </FormControl>
               <FormControl id="password">
-                <FormLabel>Login Credentials</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <InputGroup size="md">
                   <Input
                     rounded="md"
@@ -114,7 +114,7 @@ const Register = () => {
               <Stack direction="row" justifyContent="space-between" w="100%">
                 <Text fontSize={"xs"} mb={2} textAlign={"justify"}>
                   Notes: For security reasons, we do not provide a forget
-                  password feature, so please save your "Login Credentials"
+                  password feature, so please save your "Login Credentials" from email
                   carefully. If you forget, you will lose access to your diary
                   forever.
                 </Text>

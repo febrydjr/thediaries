@@ -17,35 +17,28 @@ export default async function handler(req, res) {
       const database = await connectToDatabase();
       const collection = database.collection("credentials");
 
-      const storedCredential = await collection.findOne();
+      const storedCredential = await collection.findOne({ credentials });
 
       if (!storedCredential) {
         res.status(400).json({ message: "No credentials found" });
         return;
       }
 
-      const credentialsMatch = await bcrypt.compare(
-        credentials,
-        storedCredential.credentials
-      );
-
       const payload = {
         name: storedCredential.name,
-        credentials: storedCredential.credentials,
+        // credentials: storedCredential.credentials,
       };
-      
+
+      console.log(payload);
+
       const token = generateToken(payload);
 
-      if (!credentialsMatch) {
-        res.status(400).json({ message: "Invalid credentials" });
-        return;
+      if (credentials === storedCredential.credentials) {
+        res.status(200).json({
+          message: "Login success",
+          token,
+        });
       }
-
-      res.status(200).json({
-        message: "Login success",
-        token,
-      });
-
     } catch (error) {
       res.status(500).json({ message: "Something went wrong!" });
       console.log(error);

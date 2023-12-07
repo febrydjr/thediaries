@@ -19,26 +19,31 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const SignIn = () => {
   SignIn.title = "Sign In";
   const [credentials, setCredentials] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
+  const router = useRouter();
 
   const handleSignIn = async () => {
     setIsLoading(true);
     try {
       const response = await axios.post("/api/login", { credentials });
       localStorage.setItem("token", response.data.token);
-      toast({
-        title: "Logged in!",
-        description: "Logged in successfully!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      setIsLoading(false);
+      if (response.status === 200) {
+        toast({
+          title: "Logged in!",
+          description: "Logged in successfully!",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        setIsLoading(false);
+        router.push("/dashboard");
+      }
     } catch (error) {
       console.error("Error:", error.response.data);
       toast({
@@ -47,13 +52,20 @@ const SignIn = () => {
         status: "error",
         duration: 3000,
         isClosable: true,
-      })
+      });
       setIsLoading(false);
     }
   };
 
   const handleInputChange = (event) => {
     setCredentials(event.target.value);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSignIn();
+    }
   };
 
   return (
@@ -92,14 +104,17 @@ const SignIn = () => {
                     type={"password"}
                     value={credentials}
                     onChange={handleInputChange}
+                    onKeyPress={handleKeyPress}
                   />
                 </InputGroup>
               </FormControl>
             </VStack>
             <VStack w="100%">
-            <Stack direction="row" justifyContent="space-between" w="100%">
+              <Stack direction="row" justifyContent="space-between" w="100%">
                 <Text fontSize={"xs"} mb={2} textAlign={"justify"}>
-                Input the existing Login Credentials created during registration. Please remember! Keep your login credentials safe.
+                  Input the existing "Login Credentials" get from email during
+                  registration. Please remember! Keep your login credentials
+                  safe.
                 </Text>
               </Stack>
               <Stack direction="row" justifyContent="space-between" w="100%">
@@ -108,7 +123,6 @@ const SignIn = () => {
                   color={"blue.400"}
                   textDecoration={"underline"}
                   fontSize={{ base: "sm", sm: "sm" }}
-
                 >
                   Create account?
                 </Link>

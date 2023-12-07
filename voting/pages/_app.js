@@ -8,8 +8,8 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const handleRouteChange = (url) => {
       // Retrieve the title from the page's props or meta data
-      const pageTitle = Component.title || 'Diary Depresiku';
-      document.title = `${pageTitle} - Diary Depresiku`;
+      const pageTitle = Component.title || 'Diary';
+      document.title = `${pageTitle} - Diary`;
     };
 
     router.events.on("routeChangeComplete", handleRouteChange);

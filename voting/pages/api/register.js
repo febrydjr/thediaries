@@ -25,6 +25,8 @@ export default async function handler(req, res) {
         credentials: hashedCredential,
       });
 
+      console.log(hashedCredential);
+
       return res.status(200).json({ message: "Registered!" });
     } catch (error) {
       return res.status(500).json({ message: "Something went wrong!" });
